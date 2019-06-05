@@ -10,7 +10,7 @@
 
     <build>
         <defaultGoal>clean install</defaultGoal>
-        <finalName>${project.artifactId}-${project.version} (build ${git.commit.id.abbrev})</finalName>
+        <finalName>${project.artifactId}-${project.version} (${git.commit.id.abbrev})</finalName>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
@@ -31,6 +31,7 @@
                 </executions>
 
                 <configuration>
+                    <generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties</generateGitPropertiesFilename>
                     <generateGitPropertiesFile>true</generateGitPropertiesFile>
                     <commitIdGenerationMode>flat</commitIdGenerationMode>
                     <injectAllReactorProjects>true</injectAllReactorProjects>
@@ -56,7 +57,41 @@
     </repositories>
 
     <dependencies>
-
+        <!--Lombok-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <!--Spigot API-->
+        <dependency>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot-api</artifactId>
+            <version>1.8.8-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <!--Bukkit API-->
+        <dependency>
+            <groupId>org.bukkit</groupId>
+            <artifactId>bukkit</artifactId>
+            <version>1.8.8-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <!--redis-->
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>2.9.0</version>
+            <scope>compile</scope>
+        </dependency>
+        <!--gson-->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.8.0</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
-    
+
 </project>
