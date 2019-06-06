@@ -5,12 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>me.ohvalsgod</groupId>
-    <artifactId>bklib</artifactId>
+    <artifactId>bukkit-lib</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <build>
         <defaultGoal>clean install</defaultGoal>
-        <finalName>${project.artifactId}-${project.version} (b${git.commit.id.abbrev})</finalName>
+        <finalName>${project.artifactId}-${project.version} (build ${git.commit.id.abbrev})</finalName>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
@@ -31,8 +31,6 @@
                 </executions>
 
                 <configuration>
-                    <generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties</generateGitPropertiesFilename>
-                    <generateGitPropertiesFile>true</generateGitPropertiesFile>
                     <commitIdGenerationMode>flat</commitIdGenerationMode>
                     <injectAllReactorProjects>true</injectAllReactorProjects>
                     <gitDescribe>
