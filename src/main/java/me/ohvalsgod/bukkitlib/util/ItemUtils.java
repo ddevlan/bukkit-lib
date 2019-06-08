@@ -4,7 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import me.ohvalsgod.bukkitlib.BukkitLib;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.WordUtils;
 import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.inventory.ItemStack;
 
 import java.io.IOException;
@@ -104,19 +106,19 @@ public class ItemUtils {
     }
 
     public static String getName(ItemStack item) {
-//        if (item.getDurability() != 0) {
-//            net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy(item);
-//
-//            if (nmsStack != null) {
-//                String name = nmsStack.getName();
-//
-//                if (name.contains(".")) {
-//                    name = WordUtils.capitalize(item.getType().toString().toLowerCase().replace("_", " "));
-//                }
-//
-//                return name;
-//            }
-//        }
+        if (item.getDurability() != 0) {
+            net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy(item);
+
+            if (nmsStack != null) {
+                String name = nmsStack.getName();
+
+                if (name.contains(".")) {
+                    name = WordUtils.capitalize(item.getType().toString().toLowerCase().replace("_", " "));
+                }
+
+                return name;
+            }
+        }
 
         String string = item.getType().toString().replace("_", " ");
         char[] chars = string.toLowerCase().toCharArray();

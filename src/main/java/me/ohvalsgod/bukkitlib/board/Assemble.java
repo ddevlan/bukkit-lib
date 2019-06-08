@@ -3,6 +3,7 @@ package me.ohvalsgod.bukkitlib.board;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -35,14 +36,18 @@ public class Assemble {
 	}
 
 	private void setup() {
+		//Ensure that the thread has stopped running
+		if (this.thread != null) {
+			this.thread.interrupt();
+			this.thread = null;
+		}
+
 		listeners = new AssembleListener(this);
 		//Register Events
 		this.plugin.getServer().getPluginManager().registerEvents(listeners, this.plugin);
 
-		//Ensure that the thread has stopped running
-		if (this.thread != null) {
-			this.thread.stop();
-			this.thread = null;
+		for (Player player : Bukkit.getOnlinePlayers()) {
+			getBoards().put(player.getUniqueId(), new AssembleBoard(player, this));
 		}
 
 		//Start Thread
@@ -50,14 +55,7 @@ public class Assemble {
 		Bukkit.getOnlinePlayers().forEach(o -> getBoards().put(o.getUniqueId(), new AssembleBoard(o, this)));
 	}
 
-	public void setdown() {
-		Bukkit.getOnlinePlayers().forEach(o -> {
-			getBoards().remove(o.getUniqueId());
-			o.setScoreboard(Bukkit.getScoreboardManager().getMainScoreboard());
-		});
-	}
-
-	public void cleanup() {
+	void cleanup() {
 		if (this.thread != null) {
 			this.thread.stop();
 			this.thread = null;
@@ -66,6 +64,12 @@ public class Assemble {
 		if (listeners != null) {
 			HandlerList.unregisterAll(listeners);
 			listeners = null;
+		}
+
+		for (UUID uuid : getBoards().keySet()) {
+			Player player = Bukkit.getPlayer(uuid);
+			getBoards().remove(uuid);
+			player.setScoreboard(Bukkit.getScoreboardManager().getMainScoreboard());
 		}
 	}
 
