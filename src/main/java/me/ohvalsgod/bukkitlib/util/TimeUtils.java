@@ -81,14 +81,18 @@ public final class TimeUtils {
      * @param time The string to attempt to parse.
      * @return The number of seconds 'in' the given string.
      */
-    public static int parseTime(String time) {
+    public static long parseTime(String time) {
         if (time.equals("0") || time.equals("")) {
             return (0);
         }
 
-        String[] lifeMatch = new String[]{"w", "d", "h", "m", "s"};
-        int[] lifeInterval = new int[]{604800, 86400, 3600, 60, 1};
-        int seconds = 0;
+        if (time.equalsIgnoreCase("perm") || time.equalsIgnoreCase("permanent")) {
+            return 2147483647L;
+        }
+
+        String[] lifeMatch = new String[]{"M", "w", "d", "h", "m", "s"};
+        int[] lifeInterval = new int[]{604800*4, 604800, 86400, 3600, 60, 1};
+        long seconds = 0;
 
         for (int i = 0; i < lifeMatch.length; i++) {
             Matcher matcher = Pattern.compile("([0-9]*)" + lifeMatch[i]).matcher(time);
@@ -98,7 +102,7 @@ public final class TimeUtils {
             }
         }
 
-        return (seconds);
+        return (seconds)*1000;
     }
 
     /**

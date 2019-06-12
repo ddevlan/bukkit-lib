@@ -21,7 +21,7 @@ public class PlayerParameterType implements ParameterType<Player> {
         Player player = BukkitLib.getLibrary().getServer().getPlayer(source);
 
         if (player == null) {
-            sender.sendMessage(ChatColor.RED + "No player with the name " + source + " found.");
+            sender.sendMessage(ChatColor.RED + "No player with the name '" + source + "' found.");
             return (null);
         }
 
