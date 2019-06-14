@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.server.v1_8_R3.EntityPlayer;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftHumanEntity;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
@@ -47,7 +48,7 @@ public abstract class Menu {
     public static Map<String, BukkitRunnable> checkTasks = new HashMap<>();
 
     public Inventory createInventory(Player player) {
-        Inventory inv = Bukkit.createInventory(player, size(player), getTitle(player));
+        Inventory inv = Bukkit.createInventory(player, size(player), ChatColor.translateAlternateColorCodes('&', getTitle(player)));
 
         for (Map.Entry<Integer, Button> buttonEntry : getButtons(player).entrySet()) {
             buttons.put(buttonEntry.getKey(), buttonEntry.getValue());

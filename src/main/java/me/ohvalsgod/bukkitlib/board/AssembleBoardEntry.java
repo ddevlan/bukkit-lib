@@ -62,15 +62,15 @@ public class AssembleBoardEntry {
 
 			if (prefix.charAt(15) == ChatColor.COLOR_CHAR) {
 				prefix = prefix.substring(0, 15);
-				suffix = this.text.substring(15);
+				suffix = this.text.substring(15, this.text.length());
 			} else if (prefix.charAt(14) == ChatColor.COLOR_CHAR) {
 				prefix = prefix.substring(0, 14);
-				suffix = this.text.substring(14);
+				suffix = this.text.substring(14, this.text.length());
 			} else {
 				if (ChatColor.getLastColors(prefix).equalsIgnoreCase(ChatColor.getLastColors(this.identifier))) {
-					suffix = this.text.substring(16);
+					suffix = this.text.substring(16, this.text.length());
 				} else {
-					suffix = ChatColor.getLastColors(prefix) + this.text.substring(16);
+					suffix = ChatColor.getLastColors(prefix) + this.text.substring(16, this.text.length());
 				}
 			}
 

@@ -2,6 +2,7 @@ package me.ohvalsgod.bukkitlib.menu;
 
 import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang.StringUtils;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
@@ -12,6 +13,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public abstract class Button {
 
@@ -76,13 +78,13 @@ public abstract class Button {
         ItemMeta meta = buttonItem.getItemMeta();
 
         if (getName(player) != null) {
-            meta.setDisplayName(getName(player));
+            meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', getName(player)));
         }
 
         List<String> description = getDescription(player);
 
         if (description != null) {
-            meta.setLore(description);
+            meta.setLore(description.stream().map(s -> ChatColor.translateAlternateColorCodes('&', s)).collect(Collectors.toList()));
         }
 
         buttonItem.setItemMeta(meta);

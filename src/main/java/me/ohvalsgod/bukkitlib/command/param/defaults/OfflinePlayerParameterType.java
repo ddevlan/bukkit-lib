@@ -3,6 +3,8 @@ package me.ohvalsgod.bukkitlib.command.param.defaults;
 import me.ohvalsgod.bukkitlib.BukkitLib;
 import me.ohvalsgod.bukkitlib.command.param.ParameterType;
 import org.apache.commons.lang.StringUtils;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -16,6 +18,11 @@ public class OfflinePlayerParameterType implements ParameterType<OfflinePlayer> 
     public OfflinePlayer transform(CommandSender sender, String source) {
         if (sender instanceof Player && (source.equalsIgnoreCase("self") || source.equals(""))) {
             return ((Player) sender);
+        }
+
+        if (!Bukkit.getOfflinePlayer(source).hasPlayedBefore()) {
+            sender.sendMessage(ChatColor.RED + "The player '" + source + "' has never joined the server.");
+            return null;
         }
 
         return (BukkitLib.getLibrary().getServer().getOfflinePlayer(source));

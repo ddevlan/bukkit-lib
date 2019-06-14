@@ -28,6 +28,8 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public final class CommandHandler implements Listener {
 
@@ -246,7 +248,13 @@ public final class CommandHandler implements Listener {
                     // The +1 is there to account for a space after the command if there's parameters
                     if (command.length() > alias.length() + 1) {
                         // See above as to... why this works.
-                        args = (command.substring(alias.length() + 1)).split(" ");
+                        List<String> argsList = new ArrayList<>();
+                        Matcher m = Pattern.compile("([^\"]\\S*|\".+?\")\\s*").matcher(command.substring(alias.length() + 1));
+                        while (m.find()) {
+                            argsList.add(m.group().replace("\"", ""));
+                        }
+
+                        args = argsList.toArray(new String[0]);
                     }
 
                     // We break to the command loop as we have 2 for loops here.

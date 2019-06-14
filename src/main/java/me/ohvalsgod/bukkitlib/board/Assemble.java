@@ -35,27 +35,28 @@ public class Assemble {
 		this.setup();
 	}
 
-	private void setup() {
-		//Ensure that the thread has stopped running
-		if (this.thread != null) {
-			this.thread.interrupt();
-			this.thread = null;
-		}
-
+	public void setup() {
 		listeners = new AssembleListener(this);
+
 		//Register Events
 		this.plugin.getServer().getPluginManager().registerEvents(listeners, this.plugin);
 
+		//Ensure that the thread has stopped running
+		if (this.thread != null) {
+			this.thread.stop();
+			this.thread = null;
+		}
+
+		//Register new boards for existing online players
 		for (Player player : Bukkit.getOnlinePlayers()) {
 			getBoards().put(player.getUniqueId(), new AssembleBoard(player, this));
 		}
 
 		//Start Thread
 		this.thread = new AssembleThread(this);
-		Bukkit.getOnlinePlayers().forEach(o -> getBoards().put(o.getUniqueId(), new AssembleBoard(o, this)));
 	}
 
-	void cleanup() {
+	public void cleanup() {
 		if (this.thread != null) {
 			this.thread.stop();
 			this.thread = null;

@@ -2,6 +2,7 @@ package me.ohvalsgod.bukkitlib.util;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -103,6 +104,24 @@ public final class TimeUtils {
         }
 
         return (seconds)*1000;
+    }
+
+    public static String formatToLongDetailedString(long millis) {
+        long days = TimeUnit.DAYS.toDays(millis);
+        long years = days/365;
+        days %= 365;
+        long months = days/30;
+        days %= 30;
+        long weeks = days/7;
+        days %= 7;
+
+        String output = "";
+        output += (years > 0 ? years + " years":"");
+        output += (months > 0 ? (output.isEmpty() ? "":", ") + months + " months":"");
+        output += (weeks > 0 ? (output.isEmpty() ? "":", ") + weeks + " weeks":"");
+        output += (days > 0 ? (output.isEmpty() ? "":", ") + days + "days":"");
+
+        return output;
     }
 
     /**
