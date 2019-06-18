@@ -13,7 +13,7 @@ public class WoolUtils {
     }
 
     public static byte getData(ChatColor color) {
-        if (color.ordinal() > 15) {
+        if (!color.isColor()) {
             return 0;
         }
 
