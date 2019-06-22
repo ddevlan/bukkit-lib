@@ -29,6 +29,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.*;
+import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -155,7 +156,7 @@ public final class CommandHandler implements Listener {
         List<ParameterData> parameterData = new ArrayList<>();
 
         if (!Modifier.isStatic(method.getModifiers())) {
-            BukkitLib.getLibrary().getLogger().error("Method '" + method.getName() + "' cannot be registered as a command because it is not static.");
+            BukkitLib.getLibrary().getLogger().log(Level.SEVERE, "Method '" + method.getName() + "' cannot be registered as a command because it is not static.");
             return;
         }
 
