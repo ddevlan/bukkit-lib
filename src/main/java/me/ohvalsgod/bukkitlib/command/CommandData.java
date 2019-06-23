@@ -24,8 +24,6 @@ final class CommandData {
     @Getter
     private Method method;
     @Getter
-    private CustomTimingsHandler timingsHandler;
-    @Getter
     private boolean consoleAllowed;
 
     public CommandData(Command commandAnnotation, List<ParameterData> parameters, Method method, boolean consoleAllowed) {
@@ -35,7 +33,6 @@ final class CommandData {
         this.parameters = parameters;
         this.method = method;
         this.consoleAllowed = consoleAllowed;
-        this.timingsHandler = new CustomTimingsHandler("CommandHandler - " + getName());
     }
 
     public String getName() {
@@ -118,8 +115,6 @@ final class CommandData {
         }
 
         // and actually execute the command.
-        timingsHandler.startTiming();
-
         try {
             // null = static method.
             method.invoke(null, transformedParameters.toArray());
@@ -127,18 +122,16 @@ final class CommandData {
             sender.sendMessage(ChatColor.RED + "It appears there was some issues processing your command...");
             e.printStackTrace();
         }
-
-        timingsHandler.stopTiming();
     }
 
     public static String toString(String[] args, int start) {
         StringBuilder stringBuilder = new StringBuilder();
 
         for (int arg = start; arg < args.length; arg++) {
-            stringBuilder.append(args[arg]).append(" ");
+            stringBuilder.append(args[arg]);
         }
 
-        return (stringBuilder.toString().trim());
+        return stringBuilder.toString().trim();
     }
 
 }
